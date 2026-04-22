@@ -17,13 +17,13 @@ A simple command-line tool to manage multiple Claude configurations using enviro
 Run the following command to install claudes automatically:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/yasaricli/claudes/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/yasaricli/claudes/refs/heads/develop/install.sh | bash
 ```
 
 Or with wget:
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/yasaricli/claudes/main/install.sh | bash
+wget -qO- https://raw.githubusercontent.com/yasaricli/claudes/refs/heads/develop/install.sh | bash
 ```
 
 The script will:

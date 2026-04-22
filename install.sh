@@ -51,7 +51,7 @@ trap cleanup EXIT
 echo ""
 echo -e "${YELLOW}Cloning repository...${NC}"
 cd "$TMP_DIR"
-git clone https://github.com/yasaricli/claudes.git
+git clone --branch develop https://github.com/yasaricli/claudes.git
 cd claudes
 
 # Build the binary
