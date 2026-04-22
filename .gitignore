@@ -1,0 +1,30 @@
+# Compiled binaries
+claudes
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, when explicitly used
+*.out
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Dependency directories (optional, since Go modules handle dependencies)
+vendor/
+
+# Environment files (if any in the project directory)
+.env
+*.env
