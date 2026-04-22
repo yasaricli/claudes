@@ -12,6 +12,28 @@ A simple command-line tool to manage multiple Claude configurations using enviro
 
 ## Installation
 
+### Quick Install (Recommended)
+
+Run the following command to install claudes automatically:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/yasaricli/claudes/main/install.sh | bash
+```
+
+Or with wget:
+
+```bash
+wget -qO- https://raw.githubusercontent.com/yasaricli/claudes/main/install.sh | bash
+```
+
+The script will:
+- Check if Go 1.16+ is installed
+- Clone the repository
+- Build the binary
+- Install it to `~/.local/bin` or `/usr/local/bin`
+
+### Manual Installation
+
 1. **Install Go**: Make sure you have Go 1.16+ installed
 2. **Clone or download the repository**
 3. **Build and install**:
