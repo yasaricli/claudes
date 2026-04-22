@@ -8,10 +8,29 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-echo -e "${YELLOW}========================================${NC}"
-echo -e "${YELLOW}  Claudes - Claude CLI Profile Manager${NC}"
-echo -e "${YELLOW}========================================${NC}"
-echo ""
+# Check if claudes is already installed
+CLAUDES_INSTALLED=false
+CLAUDES_PATH=""
+if command -v claudes &> /dev/null; then
+    CLAUDES_INSTALLED=true
+    CLAUDES_PATH=$(which claudes)
+fi
+
+# Determine operation mode
+if [ "$CLAUDES_INSTALLED" = true ]; then
+    OPERATION="UPDATE"
+    echo -e "${YELLOW}========================================${NC}"
+    echo -e "${YELLOW}  Claudes - Updating...${NC}"
+    echo -e "${YELLOW}========================================${NC}"
+    echo ""
+    echo -e "${GREEN}✓ Claudes found at: $CLAUDES_PATH${NC}"
+else
+    OPERATION="INSTALL"
+    echo -e "${YELLOW}========================================${NC}"
+    echo -e "${YELLOW}  Claudes - Claude CLI Profile Manager${NC}"
+    echo -e "${YELLOW}========================================${NC}"
+    echo ""
+fi
 
 # Check if Go is installed
 if ! command -v go &> /dev/null; then
@@ -74,9 +93,13 @@ else
 fi
 
 echo ""
-echo -e "${YELLOW}Installing to $INSTALL_DIR...${NC}"
+if [ "$OPERATION" = "UPDATE" ]; then
+    echo -e "${YELLOW}Updating claudes in $INSTALL_DIR...${NC}"
+else
+    echo -e "${YELLOW}Installing to $INSTALL_DIR...${NC}"
+fi
 
-# Install the binary
+# Install/update the binary
 if [ "$INSTALL_DIR" = "/usr/local/bin" ] && [ "$EUID" -ne 0 ]; then
     # Need sudo for /usr/local/bin
     if command -v sudo &> /dev/null; then
@@ -99,23 +122,33 @@ fi
 
 # Verify installation
 echo ""
-echo -e "${YELLOW}Verifying installation...${NC}"
+echo -e "${YELLOW}Verifying...${NC}"
 if command -v claudes &> /dev/null; then
+    NEW_CLAUDES_PATH=$(which claudes)
+
     echo ""
     echo -e "${GREEN}========================================${NC}"
-    echo -e "${GREEN}  Installation successful!${NC}"
+    if [ "$OPERATION" = "UPDATE" ]; then
+        echo -e "${GREEN}  Update successful!${NC}"
+    else
+        echo -e "${GREEN}  Installation successful!${NC}"
+    fi
     echo -e "${GREEN}========================================${NC}"
     echo ""
-    echo "Installed at: $(which claudes)"
+    echo "Installed at: $NEW_CLAUDES_PATH"
     echo ""
-    echo "Quick start:"
-    echo "  claudes help          # Show available commands"
-    echo "  claudes add           # Create a new profile"
-    echo "  claudes list          # List all profiles"
-    echo "  claudes <profile>     # Run Claude with a profile"
+    if [ "$OPERATION" = "UPDATE" ]; then
+        echo "To update again in the future, just run this script again."
+    else
+        echo "Quick start:"
+        echo "  claudes help          # Show available commands"
+        echo "  claudes add           # Create a new profile"
+        echo "  claudes list          # List all profiles"
+        echo "  claudes <profile>     # Run Claude with a profile"
+    fi
     echo ""
     exit 0
 else
-    echo -e "${RED}Error: Installation failed. claudes not found in PATH.${NC}"
+    echo -e "${RED}Error: Operation failed. claudes not found in PATH.${NC}"
     exit 1
 fi

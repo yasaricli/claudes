@@ -11,10 +11,11 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "claudes",
-	Short: "Claude CLI configuration manager",
-	Long:  `A CLI tool to manage multiple Claude configurations using environment files.`,
-	Args:  cobra.ArbitraryArgs,
+	Use:     "claudes",
+	Short:   "Claude CLI configuration manager",
+	Long:    `A CLI tool to manage multiple Claude configurations using environment files.`,
+	Version: Version,
+	Args:    cobra.ArbitraryArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			cmd.Help()

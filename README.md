@@ -12,9 +12,9 @@ A simple command-line tool to manage multiple Claude configurations using enviro
 
 ## Installation
 
-### Quick Install (Recommended)
+### Quick Install / Update (Recommended)
 
-Run the following command to install claudes automatically:
+Run the following command to **install or update** claudes automatically:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/yasaricli/claudes/refs/heads/develop/install.sh | bash
@@ -28,9 +28,20 @@ wget -qO- https://raw.githubusercontent.com/yasaricli/claudes/refs/heads/develop
 
 The script will:
 - Check if Go 1.16+ is installed
-- Clone the repository
+- **Auto-detect** if claudes is already installed (install vs update mode)
+- Clone the repository (develop branch)
 - Build the binary
-- Install it to `~/.local/bin` or `/usr/local/bin`
+- Install/update it to `~/.local/bin` or `/usr/local/bin`
+
+### Check Version
+
+To see your current version:
+
+```bash
+claudes version
+# or
+claudes --version
+```
 
 ### Manual Installation
 
