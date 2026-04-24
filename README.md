@@ -71,10 +71,10 @@ Claudes looks for `.env` files in `~/.config/claudes/` directory. Each `.env` fi
 
 ```
 ~/.config/claudes/
-├── kimi.env
+├── anthropic.env
+├── openai.env
 ├── deepseek.env
-├── dol.env
-└── glm51.env
+└── custom.env
 ```
 
 ### Profile Format
@@ -82,10 +82,17 @@ Claudes looks for `.env` files in `~/.config/claudes/` directory. Each `.env` fi
 Each `.env` file should contain Claude CLI environment variables:
 
 ```env
-# Example: kimi.env
-ANTHROPIC_AUTH_TOKEN=your-kimi-api-token
-ANTHROPIC_BASE_URL=https://api.kimi.com/v1
-ANTHROPIC_MODEL=kimi-chat
+# Example: anthropic.env (default Claude API)
+ANTHROPIC_AUTH_TOKEN=sk-ant-xxx
+ANTHROPIC_BASE_URL=https://api.anthropic.com/v1
+ANTHROPIC_MODEL=claude-3-opus-20240229
+```
+
+```env
+# Example: openai.env
+ANTHROPIC_AUTH_TOKEN=sk-xxx
+ANTHROPIC_BASE_URL=https://api.openai.com/v1
+ANTHROPIC_MODEL=gpt-4
 ```
 
 ```env
@@ -115,11 +122,11 @@ claudes add <profile-name>
 
 Interactive example:
 ```
-Enter profile name: kimi
+Enter profile name: custom
 Enter ANTHROPIC_AUTH_TOKEN: your-api-token
-Enter ANTHROPIC_BASE_URL (e.g., https://api.anthropic.com/v1): https://api.kimi.com/v1
-Enter ANTHROPIC_MODEL (e.g., claude-3-opus-20240229): kimi-chat
-Profile 'kimi' created successfully!
+Enter ANTHROPIC_BASE_URL (e.g., https://api.anthropic.com/v1): https://api.example.com/v1
+Enter ANTHROPIC_MODEL (e.g., claude-3-opus-20240229): custom-model
+Profile 'custom' created successfully!
 ```
 
 ### List Profiles
@@ -131,10 +138,10 @@ claudes list
 Output example:
 ```
 Available profiles:
-  - kimi
+  - anthropic
+  - openai
   - deepseek
-  - dol
-  - glm51
+  - custom
 ```
 
 ### Update an Existing Profile
@@ -147,9 +154,16 @@ claudes update <profile-name>
 
 Interactive example:
 ```
-Updating profile 'kimi' (leave empty to keep current value)
+Updating profile 'anthropic' (leave empty to keep current value)
 
-Enter new ANTHROPIC_AUTH_TOKEN: 
+Enter ANTHROPIC_AUTH_TOKEN (current: sk-a********1234):
+Enter ANTHROPIC_BASE_URL (current: https://api.anthropic.com/v1):
+Enter ANTHROPIC_MODEL (current: claude-3-opus-20240229):
+
+Profile 'anthropic' updated successfully!
+```
+
+> 💡 All existing values are shown in parentheses. Just press Enter to keep the current value, or enter a new value to change it. 
 Enter new ANTHROPIC_BASE_URL: https://api.newendpoint.com/v1
 Enter new ANTHROPIC_MODEL: 
 Profile 'kimi' updated successfully!
