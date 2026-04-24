@@ -78,27 +78,7 @@ var updateCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		// Interactive input
-		reader := bufio.NewReader(os.Stdin)
-
-		fmt.Printf("\nUpdating profile '%s' (leave empty to keep current value)\n\n", profile)
-
-		// Get auth token
-		fmt.Print("Enter new ANTHROPIC_AUTH_TOKEN: ")
-		authTokenInput, _ := reader.ReadString('\n')
-		authToken := strings.TrimSpace(authTokenInput)
-
-		// Get base URL
-		fmt.Print("Enter new ANTHROPIC_BASE_URL: ")
-		baseURLInput, _ := reader.ReadString('\n')
-		baseURL := strings.TrimSpace(baseURLInput)
-
-		// Get model
-		fmt.Print("Enter new ANTHROPIC_MODEL: ")
-		modelInput, _ := reader.ReadString('\n')
-		model := strings.TrimSpace(modelInput)
-
-		// Load existing profile to get current values
+		// Load existing profile to get current values BEFORE asking input
 		existingVars, err := config.LoadProfile(profile)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
@@ -122,6 +102,46 @@ var updateCmd = &cobra.Command{
 				}
 			}
 		}
+
+		// Mask auth token for display
+		maskedToken := ""
+		if len(existingConfig.AuthToken) > 8 {
+			maskedToken = existingConfig.AuthToken[:4] + "********" + existingConfig.AuthToken[len(existingConfig.AuthToken)-4:]
+		} else if existingConfig.AuthToken != "" {
+			maskedToken = "********"
+		}
+
+		// Interactive input
+		reader := bufio.NewReader(os.Stdin)
+
+		fmt.Printf("\nUpdating profile '%s' (leave empty to keep current value)\n\n", profile)
+
+		// Get auth token
+		if maskedToken != "" {
+			fmt.Printf("Enter ANTHROPIC_AUTH_TOKEN (current: %s): ", maskedToken)
+		} else {
+			fmt.Print("Enter ANTHROPIC_AUTH_TOKEN: ")
+		}
+		authTokenInput, _ := reader.ReadString('\n')
+		authToken := strings.TrimSpace(authTokenInput)
+
+		// Get base URL
+		if existingConfig.BaseURL != "" {
+			fmt.Printf("Enter ANTHROPIC_BASE_URL (current: %s): ", existingConfig.BaseURL)
+		} else {
+			fmt.Print("Enter ANTHROPIC_BASE_URL: ")
+		}
+		baseURLInput, _ := reader.ReadString('\n')
+		baseURL := strings.TrimSpace(baseURLInput)
+
+		// Get model
+		if existingConfig.Model != "" {
+			fmt.Printf("Enter ANTHROPIC_MODEL (current: %s): ", existingConfig.Model)
+		} else {
+			fmt.Print("Enter ANTHROPIC_MODEL: ")
+		}
+		modelInput, _ := reader.ReadString('\n')
+		model := strings.TrimSpace(modelInput)
 
 		// Use new values or keep existing
 		updatedConfig := config.ProfileConfig{
