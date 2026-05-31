@@ -29,7 +29,4 @@ var versionCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(versionCmd)
-
-	// Add --version flag to root command
-	rootCmd.Flags().BoolP("version", "v", false, "Print version information")
 }

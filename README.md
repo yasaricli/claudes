@@ -199,6 +199,28 @@ claudes kimi
 claudes deepseek --help
 ```
 
+### Resume a Previous Conversation
+
+Claude's `--resume` flag is fully supported. All Claude CLI flags are passed through as-is.
+
+```bash
+# Open interactive session picker
+claudes <profile> --resume
+
+# Resume a specific session by ID or title
+claudes <profile> --resume <session-id>
+
+# Short form
+claudes <profile> -r <session-id>
+```
+
+Example:
+
+```bash
+claudes kimi --resume
+claudes deepseek --resume abc123
+```
+
 ### Help
 
 ```bash
